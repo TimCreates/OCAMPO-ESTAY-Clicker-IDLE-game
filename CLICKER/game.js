@@ -7,6 +7,9 @@ let goldPerSecond = 0;
 let upgradeClickCost = 10;
 let upgradeIdleCost = 25;
 
+let gameStarted = false;
+
+// Elements
 const goldText = document.getElementById("gold");
 const statsText = document.getElementById("stats");
 const mineBtn = document.getElementById("mineBtn");
@@ -15,7 +18,19 @@ const bg = document.getElementById("bg");
 const upgradeClickBtn = document.getElementById("upgradeClick");
 const upgradeIdleBtn = document.getElementById("upgradeIdle");
 
-// Update UI
+const startBtn = document.getElementById("startBtn");
+const menu = document.getElementById("menu");
+const gameWrapper = document.getElementById("gameWrapper");
+
+// ================= MAIN MENU =================
+startBtn.onclick = () => {
+    menu.style.display = "none";
+    gameWrapper.style.display = "block";
+    gameStarted = true;
+    updateUI();
+};
+
+// ================= UI =================
 function updateUI() {
     goldText.innerText = "Gold: " + gold;
     statsText.innerText =
@@ -26,7 +41,7 @@ function updateUI() {
     upgradeIdleBtn.innerText = "Hire Miner (" + upgradeIdleCost + ")";
 }
 
-// Floating text
+// ================= FLOAT TEXT =================
 function createFloatingText(x, y, amount) {
     const text = document.createElement("div");
     text.className = "floating-text";
@@ -37,7 +52,7 @@ function createFloatingText(x, y, amount) {
     setTimeout(() => text.remove(), 1000);
 }
 
-// Coins
+// ================= BACKGROUND EFFECTS =================
 function spawnCoin() {
     const coin = document.createElement("div");
     coin.className = "coin";
@@ -48,7 +63,6 @@ function spawnCoin() {
     setTimeout(() => coin.remove(), 8000);
 }
 
-// Miners
 function spawnMiner() {
     const miner = document.createElement("div");
     miner.className = "miner";
@@ -58,14 +72,15 @@ function spawnMiner() {
     setTimeout(() => miner.remove(), 10000);
 }
 
-// CLICK
+// ================= CLICK =================
 mineBtn.onclick = (e) => {
+    if (!gameStarted) return;
+
     gold += goldPerClick;
     updateUI();
 
     createFloatingText(e.clientX, e.clientY, goldPerClick);
 
-    // animations
     mineBtn.classList.add("mine-anim");
     setTimeout(() => mineBtn.classList.remove("mine-anim"), 100);
 
@@ -76,8 +91,10 @@ mineBtn.onclick = (e) => {
     setTimeout(() => goldText.classList.remove("pop"), 200);
 };
 
-// Upgrades
+// ================= UPGRADES =================
 upgradeClickBtn.onclick = () => {
+    if (!gameStarted) return;
+
     if (gold >= upgradeClickCost) {
         gold -= upgradeClickCost;
         goldPerClick++;
@@ -90,6 +107,8 @@ upgradeClickBtn.onclick = () => {
 };
 
 upgradeIdleBtn.onclick = () => {
+    if (!gameStarted) return;
+
     if (gold >= upgradeIdleCost) {
         gold -= upgradeIdleCost;
         goldPerSecond++;
@@ -101,18 +120,27 @@ upgradeIdleBtn.onclick = () => {
     }
 };
 
-// Idle income
+// ================= GAME LOOPS =================
 setInterval(() => {
+    if (!gameStarted) return;
+
     if (goldPerSecond > 0) {
         gold += goldPerSecond;
         updateUI();
     }
 }, 1000);
 
-// Background effects
-setInterval(spawnCoin, 800);
-setInterval(spawnMiner, 3000);
+setInterval(() => {
+    if (!gameStarted) return;
+    spawnCoin();
+}, 800);
 
+setInterval(() => {
+    if (!gameStarted) return;
+    spawnMiner();
+}, 3000);
+
+// Initial UI
 updateUI();
 
 });
