@@ -1,4 +1,5 @@
 /* ===== GLOBAL ===== */
+/* ===== GLOBAL ===== */
 body {
     margin: 0;
     color: white;
@@ -6,36 +7,56 @@ body {
     text-align: center;
     overflow: hidden;
 
-    /* NEW MINING BACKGROUND */
-    background: url("https://www.dreamstime.com/d-cartoon-game-background-mining-quarry-landscape-highlighting-copper-ore-mine-tunnel-cave-entrance-glowing-gold-pieces-image352611299") no-repeat center center fixed;
-    background-size: cover;
+    /* PURE CSS MINING BACKGROUND */
+    background: linear-gradient(180deg, #0f0f1a, #1a1a2e, #16213e);
 }
 
-/* dark overlay for readability */
+/* animated cave glow */
 body::before {
     content: "";
     position: fixed;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.65);
+
+    /* glowing cave lights */
+    background:
+        radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.08), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 140, 0, 0.08), transparent 40%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.03), transparent 60%);
+
+    animation: caveGlow 6s ease-in-out infinite alternate;
     pointer-events: none;
     z-index: 0;
 }
 
-/* glowing dust effect (your original glow upgraded) */
+@keyframes caveGlow {
+    from {
+        filter: brightness(0.8);
+        transform: scale(1);
+    }
+    to {
+        filter: brightness(1.2);
+        transform: scale(1.05);
+    }
+}
+
+/* floating dust particles */
 body::after {
     content: "";
     position: fixed;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle, rgba(255,215,0,0.08) 2px, transparent 3px);
-    background-size: 50px 50px;
-    animation: drift 12s linear infinite;
-    opacity: 0.4;
+
+    background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 2px);
+    background-size: 40px 40px;
+
+    animation: dustMove 10s linear infinite;
+    opacity: 0.5;
+    pointer-events: none;
     z-index: 0;
 }
 
-@keyframes drift {
+@keyframes dustMove {
     from { transform: translateY(0); }
     to { transform: translateY(-100px); }
 }
@@ -47,6 +68,16 @@ body::after {
     height: 100%;
     overflow: hidden;
     z-index: 0;
+}
+
+/* glowing overlay */
+body::before {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,215,0,0.08), transparent);
+    pointer-events: none;
 }
 
 /* ===== TITLE ===== */
@@ -64,7 +95,6 @@ h1 {
     display: inline-block;
     padding: 25px;
     border-radius: 15px;
-
     background: rgba(0,0,0,0.4);
     backdrop-filter: blur(8px);
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.2);
@@ -108,7 +138,7 @@ button:active {
     box-shadow: 0 1px #2e6e31;
 }
 
-/* Upgrade buttons */
+/* Upgrade buttons different color */
 #upgradeClick {
     background: linear-gradient(145deg, #3498db, #2c80b4);
 }
@@ -159,10 +189,13 @@ button:active {
 }
 
 /* ===== ANIMATIONS ===== */
+
+/* click press */
 .mine-anim {
     transform: scale(0.9);
 }
 
+/* screen shake */
 .shake {
     animation: shake 0.3s;
 }
@@ -175,6 +208,7 @@ button:active {
     100% { transform: translate(0, 0); }
 }
 
+/* gold pop */
 .pop {
     animation: pop 0.2s;
 }
