@@ -5,24 +5,31 @@
 <title>Idle Mine Clicker</title>
 <link rel="stylesheet" href="style.css">
 </head>
-
-<body>
-    
 <hr style="width: 60%; opacity: 0.3;">
+<body>
 
-<div class="background" id="bg"></div>
-
-<div class="container" id="game">
+<!-- MAIN MENU -->
+<div id="menu">
     <h1>⛏️ Idle Mine Clicker</h1>
+    <button id="startBtn">Start Game</button>
+</div>
 
-    <p id="gold">Gold: 0</p>
-    <p id="stats">Per Click: 1 | Per Second: 0</p>
+<!-- GAME -->
+<div id="gameWrapper" style="display: none;">
+    <div class="background" id="bg"></div>
 
-    <button id="mineBtn">Mine Gold</button>
+    <div class="container" id="game">
+        <h1>⛏️ Idle Mine Clicker</h1>
 
-    <div>
-        <button id="upgradeClick">Upgrade Pickaxe (10)</button>
-        <button id="upgradeIdle">Hire Miner (25)</button>
+        <p id="gold">Gold: 0</p>
+        <p id="stats">Per Click: 1 | Per Second: 0</p>
+
+        <button id="mineBtn">Mine Gold</button>
+
+        <div>
+            <button id="upgradeClick">Upgrade Pickaxe (10)</button>
+            <button id="upgradeIdle">Hire Miner (25)</button>
+        </div>
     </div>
 </div>
 
