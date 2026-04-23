@@ -26,7 +26,7 @@ function updateUI() {
     upgradeIdleBtn.innerText = "Hire Miner (" + upgradeIdleCost + ")";
 }
 
-// Floating click text
+// Floating text
 function createFloatingText(x, y, amount) {
     const text = document.createElement("div");
     text.className = "floating-text";
@@ -37,57 +37,67 @@ function createFloatingText(x, y, amount) {
     setTimeout(() => text.remove(), 1000);
 }
 
-// Generate background coins
+// Coins
 function spawnCoin() {
     const coin = document.createElement("div");
     coin.className = "coin";
     coin.innerText = "🪙";
-
     coin.style.left = Math.random() * 100 + "vw";
     coin.style.animationDuration = (3 + Math.random() * 5) + "s";
-
     bg.appendChild(coin);
-
     setTimeout(() => coin.remove(), 8000);
 }
 
-// Generate miners
+// Miners
 function spawnMiner() {
     const miner = document.createElement("div");
     miner.className = "miner";
     miner.innerText = "⛏️";
-
     miner.style.animationDuration = (5 + Math.random() * 5) + "s";
-
     bg.appendChild(miner);
-
     setTimeout(() => miner.remove(), 10000);
 }
 
-// Click event
+// CLICK
 mineBtn.onclick = (e) => {
     gold += goldPerClick;
     updateUI();
+
     createFloatingText(e.clientX, e.clientY, goldPerClick);
+
+    // animations
+    mineBtn.classList.add("mine-anim");
+    setTimeout(() => mineBtn.classList.remove("mine-anim"), 100);
+
+    document.body.classList.add("shake");
+    setTimeout(() => document.body.classList.remove("shake"), 300);
+
+    goldText.classList.add("pop");
+    setTimeout(() => goldText.classList.remove("pop"), 200);
 };
 
-// Upgrade click
+// Upgrades
 upgradeClickBtn.onclick = () => {
     if (gold >= upgradeClickCost) {
         gold -= upgradeClickCost;
         goldPerClick++;
         upgradeClickCost *= 2;
         updateUI();
+
+        goldText.classList.add("pop");
+        setTimeout(() => goldText.classList.remove("pop"), 200);
     }
 };
 
-// Upgrade idle
 upgradeIdleBtn.onclick = () => {
     if (gold >= upgradeIdleCost) {
         gold -= upgradeIdleCost;
         goldPerSecond++;
         upgradeIdleCost *= 2;
         updateUI();
+
+        goldText.classList.add("pop");
+        setTimeout(() => goldText.classList.remove("pop"), 200);
     }
 };
 
@@ -103,7 +113,6 @@ setInterval(() => {
 setInterval(spawnCoin, 800);
 setInterval(spawnMiner, 3000);
 
-// Initial UI update
 updateUI();
 
 });
