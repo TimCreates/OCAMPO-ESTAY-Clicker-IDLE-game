@@ -19,6 +19,8 @@ const upgradeClickBtn = document.getElementById("upgradeClick");
 const upgradeIdleBtn = document.getElementById("upgradeIdle");
 
 const startBtn = document.getElementById("startBtn");
+const backToMenuBtn = document.getElementById("backToMenu");
+
 const menu = document.getElementById("menu");
 const gameWrapper = document.getElementById("gameWrapper");
 
@@ -27,6 +29,22 @@ startBtn.onclick = () => {
     menu.style.display = "none";
     gameWrapper.style.display = "block";
     gameStarted = true;
+    updateUI();
+};
+
+// ✅ RETURN TO MENU
+backToMenuBtn.onclick = () => {
+    gameWrapper.style.display = "none";
+    menu.style.display = "block";
+    gameStarted = false;
+
+    // OPTIONAL: reset game
+    gold = 0;
+    goldPerClick = 1;
+    goldPerSecond = 0;
+    upgradeClickCost = 10;
+    upgradeIdleCost = 25;
+
     updateUI();
 };
 
